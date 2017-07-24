@@ -1,0 +1,62 @@
+第2章 数组
+	JavaScript中的数组和其他语言的数组不太一样。其本质是一种特殊的对象，效率上不如其他语言中的数组高。
+	JavaScript数组用来表示偏移量的索引是该对象的属性，索引可能是整数，然而数字索引在内部会被转换为字符串类型。
+	JavaScript数组中的元素不必是同一种数据类型，这一点和很多编程语言不同。
+	../Array/isArray.js
+		可以调用Array.isArray()来判断一个对象是否是数组。
+	数组定义方法：
+		var arr = [1,2,3,4,5];
+		var arr = new Array();
+		var arr = new Array(1,2,3,4,5);
+		var arr = new Array(10); //参数为数组长度
+		推荐使用[]，比Array效率更高。
+	数组整体性操作：
+		浅复制，只是给被复制的数组添加一个新的引用。
+		深复制，循环复制数组元素。
+	查找元素：
+		indexOf()，查找元素，返回第一个和参数相同的元素的索引。
+		lastIndexOf()，查找元素，返回相同元素中最后一个元素的索引。
+	字符串和数组相互转化：
+		split()，分割字符串生成数组，参数为分割字符。
+		join()，数组转化为字符串。有参数用参数拼接，无参数用","拼接。
+		toString()，数组转化为字符串。用","拼接。
+	已有数组创造新数组：
+		concat()，合并数组创建一个新数组。arrA.concat(arrB);//[A1,A2,……,An,B1,B2,……Bn]
+		splice()，截取数组的子集创造一个新数组。第一个参数是截取的起始索引，第二个是截取的长度，第三个为想要添加进数组的元素。
+	增删元素：
+		splice()，可以在数组中间位置增删数组。
+		shift()，unshift()，pop()，push()。
+	数组排序：
+		reverse()，翻转数组。
+		sort()，按字典顺序排序，因此它假定元素都是字符串类型。数字排序效果不好，如[1,11,2,22,3]。
+	迭代器方法：
+	1.不生成数组的迭代器方法：
+		../Array/forEach.js
+			forEach()，接受一个函数作为参数，对数组中的每个元素使用该函数。
+		../Array/every.js
+			every()，接受一个返回值为bool的函数，对数组中的每个元素使用该函数。如果对于所有元素，该函数返回值都为true，该方法返回true。否则返回false。
+		../Array/some.js
+			some()，接受一个返回值为bool的函数，对数组中的每个元素使用该函数。只要有一个元素使该函数返回true，该方法就返回true。
+		../Array/reduce.js
+			reduce()，接受一个函数，返回一个值。该方法会从第一个累加值开始，不断的对累加值和数组中的后续元素调用该方法，知道数组的最后一个元素，最后返回得到的累加值。
+	2.生成数组的迭代器方法：
+		../Array/map.js
+			map()，类似于forEach()，但是返回一个新数组。
+		../Array/filter.js
+			filter()，类似于every()，但是返回一个新数组，该数组中包含应用该函数后结果为true的元素。
+	创建二维数组
+		二维数组（Two-dimensional Array）。
+		../Array/initTDArray.js
+			数组创建时为了避免元素都是undefined，使用JavaScript：The Good Parts(O'Reilly)一书第64页的例子。通过扩展js数组对象，为其添加一个新的方法。
+		小规模数组可以直接创建效果最好，直接在[]中写入元素。
+	遍历二维数组
+		../Array/foreachTDArray.js
+	对象中的数组
+		../Array/weekTemp.js
+			周气温。
+	【练习】
+		../Array/Exercise/exercise1.js
+		../Array/Exercise/exercise2.js
+		../Array/Exercise/exercise3.js
+			扩展周气温为二维数组存储余月气温。
+		../Array/Exercise/exercise4.js

@@ -1,0 +1,54 @@
+第6章 链表
+	在很多编程语言中，数组的长度是固定的。而且在数组中添加删除元素都很麻烦，涉及到其他元素的平移。但是JavaScript的数组不存在上述问题，可以使用splice()方法删除添加。
+	JavaScript中数组的主要问题是，它们被实现成了对象，与其他语言的数组相比，效率很低。如果发现数组在使用时很慢，可以考虑用链表来替代它。除了涉及对数组的随机访问时。
+	链表的尾节点指向null。
+	../LList/LList.js
+		实现LinkedList类。这里涉及Node类和LList类两部分。
+		Node节点包含属性element和next，next初始为null。
+		LList属性head，初始化this.head = new Node("head");
+		LList方法：find，insert，remove，display，以及findPrevious查找前驱节点，它是remove的辅助方法。
+	../LList/testLList.js(依赖../LList/LList.js)
+		测试链表类。
+	../LList/DLList.js
+		双向链表(Doubly linked list/Bi-Directional Linked List)，让从后向前遍历更简单。双向链表的remove()方法比单项链表效率高，不再需要查找前驱节点的方法findPrevious()。需要适当修改insert()方法。
+		Node添加属性:previous
+		增加方法：findLast(查找最后一个节点)，dispReverse(反序显示)
+		对书上的insert()方法进行了优化，假如在A和C插入B，需要制定C的前继为B，但是有可能远表中最后一个元素是A，也就是说C为null，这时候C没有前继，这里需要添加一个判断。
+		对书上的remove()方法进行补充，添加删除元素是最后一个元素的情况。
+		书中的测试方法只用在链表结尾插入元素，在链表中间删除元素，所以没有出错。
+	../LList/testDLList.js(依赖../LList/DLList.js)
+		测试双向链表类。
+	../LList/CLList.js	
+		循环链表(Circle linked list),循环链表也可以从后向前遍历链表，而且不需要额外的空间。
+		注意修改display方法，添加头结点的判断，避免陷入死循环。
+		添加了反序显示的dispReverse方法。
+	../LList/testCLList.js(依赖../LList/CLList.js)
+		测试循环链表类。
+	【练习】
+	../LList/Exercise/extentLList.js(依赖../LList/DLList.js)
+		练习1，练习2，练习3。
+		扩展双向链表并测试。创建ELList类，var ELList = function(){……},继承DLList，使用prototype进行继承ELList.prototype = new DLList();然后用ELList.prototype.advance = function(n)的写法扩展方法。
+		添加属性currNode(当前节点)
+		添加方法：
+			advance(n)在链表中继续移动n个节点；
+			back(n)在链表中回退n个节点；
+			show()显示当前节点。
+	练习4参见单向链表测试../LList/testLList.js。
+	练习5参见双向链表../LList/DLList.js。
+	../LList/Exercise/JosephProblem.js(依赖../LList/CLList.js)
+		练习6，约瑟夫环。
+		第一种解法基于循环链表,设置人的编号从1到40。时间复杂度O(MN)。
+		第二种为简单算法，时间复杂度O(N)。
+		设置人的编号从0到39。主要思路如下：
+		0	1		2		……	m-2	m-1	m	m+1	m+2	……	n-2		n-1
+		n-m	n-m+1	n-m+2	……	n-2	del	0	1	2	……	n-m-2	n-m-1
+		f(n) = (f(n-1) + m) % n
+		
+		0		1	2		……	m-2	m-1	m	m+1	m+2	……	n-2		n-2
+		n-m-1	n-m	n-m+1	……	n-3	del	0	1	2	……	n-m-2	n-m-2		
+		f(n-1) = (f(n-2) + m) % (n - 1)
+		.
+		.
+		.
+		f(1) = 0;
+		设置循环变量i，从2-n，包括n。因为f(1) = 0，所以f初始值设置为0。可以求出第n个出局人的编号。

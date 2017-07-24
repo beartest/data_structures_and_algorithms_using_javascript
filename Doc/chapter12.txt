@@ -1,0 +1,65 @@
+第12章 排序算法
+	对计算机中存储的数据执行的两种最常见的操作是排序和检索。
+	本章介绍了三种基础排序算法：冒泡排序，选择排序，插入排序；三种高级排序算法：希尔排序，归并排序，快速排序。
+	../Sort/CArray.js
+		数据测试平台，用来生成数组，做排序。
+		toString()，第一行11个，中间的一行10个，简直逼死强迫症。第14章中有全都是10个一行的输出方法。
+	../Sort/testCArray.js(依赖../Sort/CArray.js)
+		检验随机数据生成。
+	../Sort/testBubbleSort.js(依赖../Sort/CArray.js)
+		测试冒泡排序。给CArray.js添加bubbleSort()方法。
+		外层循环outer: n ~ 2
+		内层循环inner: 0 ~ outer-1
+		inner和inner+1的进行比较。
+	../Sort/testSelectionSort.js(依赖../Sort/CArray.js)
+		测试选择排序。给CArray.js添加selectionSort()方法。
+		外层循环outer: 0 ~ n-2
+		内层循环inner: outer+1 ~ n-1
+	../Sort/testInsertSort.js(依赖../Sort/CArray.js)
+		测试插入排序。给CArray.js添加insertSort()方法。
+		外层循环outer: 1 ~ n-1
+		内层循环inner: 1 ~ outer
+	../Sort/compare.js(依赖../Sort/CArray.js)
+		为排序函数计时，比较冒泡排序，选择排序和插入排序。选择排序和插入排序要比冒泡排序快，插入排序是这三种算法中最快的一种。
+	../Sort/testShellSort.js(依赖../Sort/CArray.js)
+		测试希尔排序。给CArray.js添加shellSort()方法。
+		希尔排序的工作原理是，通过定义一个间隔序列来表示在排序过程中进行比较的元素之间有多远的间隔。
+		Marcin Ciura在他2001年发表的论文“Best Increments for the Average Case of Shell Sort”中定义的间隔序列：701,301,132,57,23,10,4,1。
+		在开始做最后一次处理时，大部分元素都将在正确的位置，算法就不需要对很多元素进行交换。这就是希尔排序更高效的地方。
+	../Sort/testShellSort1.js(依赖../Sort/CArray.js)
+		测试动态间隔序列希尔排序。给CArray.js添加shellSort1()方法。
+	../Sort/compareShell.js(依赖../Sort/CArray.js)
+		比较硬编码间隔序列的希尔排序和动态间隔序列的希尔排序，算法效率一样。
+	../Sort/testMergeSort.js(依赖../Sort/CArray.js)
+		测试归并排序。给CArray添加mergeSort()和mergeArrays()方法。
+		归并排序的实现原理：把一系列排好序的子序列合并成一个大的完整的有序序列。
+		1.自顶向下的归并排序：
+			这种方法通常用递归实现，然而，在JavaScript中这种方法不太可行，因为这个算法的递归深度对它来讲太深了。
+		2.自底向下的归并排序：
+			给CArray.js添加mergeSort()方法。在testMergeSort.js中测试。
+	../Sort/testQuickSort.js(依赖../Sort/CArray.js)
+		测试快速排序。给CArray添加qSort()方法。
+		快速排序首先从列表中选择一个元素作为基准值(pivot)，排序围绕基准值进行。
+		快速排序算法非常适用于大型数据集合，在处理小数据集时，性能反而会下降。
+	【练习 】
+		练习1：
+			对字符串数据进行排序测试，不同算法执行效率和数字数据的相同。
+			给CArray.js添加setDataText()方法。调用原来的例子进行测试。
+			归并排序需要一点修改mergeArrays()，因为字符串和Infinity无法比较大小。例如,"D">Infinity和"D"<Infinity都会返回false。
+			插入排序进行一点修改，定义输入数组为字符串数组。
+		../Sort/Exercise/exercise2.js(依赖../Sort/CArray.js)
+			练习2，给有序数组排序。测试6种排序方法效率。
+		../Sort/Exercise/exercise3.js(依赖../Sort/CArray.js)
+			练习3，给反序数组排序。测试6种排序方法效率。
+			给CArray.js添加setReverseDate()方法。
+		../Sort/Exercise/exercise4.js(依赖../Sort/CArray.js)
+			练习4，给随机数组排序。测试6种排序方法效率，以及js自带的sort方法。
+			js数组本身带的sort()方法并不是比所有的方法效率都好。
+
+	杜少博客的JS的《十大经典算法排序》很生动，很多代码也比书中用到的简洁，而且有动图演示，动图万岁！
+	http://www.cnblogs.com/dushao/p/6004883.html
+	
+	快速排序，对内存要求高的时候，数据量大时会由于递归深度过大，无法计算。
+	归并排序由于需要构建自身长度一样的数组，内存要求高的情况下也不推荐。
+	不同浏览器用的sort方法算法是不一样的，Chrome V8使用快速排序和插入排序，数组长度小于10的时候使用插入排序。Mozilla使用归并排序。
+	很多语言使用归并排序，Java和Python使用Tim排序（一种优化过的归并排序）。

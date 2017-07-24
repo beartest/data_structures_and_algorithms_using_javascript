@@ -1,0 +1,38 @@
+第7章字典中遇到delete this.dataStore[key];无效的问题。
+
+出现的现象：
+	//方法无效
+	for(var key in Object.keys(this.dataStore)) {
+		delete this.dataStore[key];
+	}
+	
+	//方法有效
+	for(var key in this.dataStore) {
+		delete this.dataStore[key];
+	}
+	
+	//方法有效,加不加this都可以
+	Object.keys(this.dataStore).forEach(function(key) {
+		delete this.dataStore[key];
+	}, this);
+	
+查找资料：
+JavaScript中in操作符(for..in)、Object.keys()和Object.getOwnPropertyNames()的区别
+	http://www.cnblogs.com/wujie520303/p/4931384.html
+js中数组遍历for与for in区别(强烈建议不要使用for in遍历数组)
+	http://www.cnblogs.com/javaee6/p/4142270.html?utm_source=tuicool&utm_medium=referral
+	MDN delete
+	https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/delete
+阶段性成果：
+1.Object.keys(arr)和for(var key in arr),顺序是相同的。
+2.不要用for in遍历数组，全部统一采用标准的for循环变量数组(我们无法保证我们引入的js是否会采用prototype扩展原生的Array)。
+3.Object.keys()方法会返回一个由一个给定对象的自身可枚举属性组成的数组；Object.getOwnPropertyNames()方法返回一个由指定对象的所有自身属性的属性名（包括不可枚举属性）组成的数组。
+4.delete不能从全局作用域或函数的作用域中删除var声明的属性。
+5.delete有bool返回值，但是不起作用的时候也可能会返回true。
+
+接触到了很多陌生的词：原型链，可枚举属性，不可枚举属性，严格模式，非严格模式。这就触及到我的知识盲点了，请允许我做个悲伤的表情。目前看来最可能的原因是MDN delete中的一段话：
+	“如果 delete 操作符删除成功，则被删除的属性将从所属的对象上彻底消失。然后，如果该对象的原型链上有一个同名属性，则该对象会从原型链上继承该同名属性。（也就是说delete操作只会在自身的属性上起作用）”
+	
+最后发现实际上是一场乌龙，和delete没有关系……
+Object.keys(this.dataStore)返回的是一个数组，所以当for in一个数组的时候，key会变为0,1……。自然删除无效……
+	

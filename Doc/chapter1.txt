@@ -1,0 +1,6 @@
+第1章 JavaScript的编程环境和模型
+	介绍使用JavaScript shell（由Mozilla提供的综合JavaScript编程环境SpiderMonkey中的一部分）。
+	介绍简单的JavaScript概念。
+	将数字格式化为固定精度：var z = 1.1; z.ToFixed(2);//1.10
+	JavaScript拥有的是函数作用域，也就是说JavaScript没有块级作用域。比如C#的for循环中的就是块级作用域。(ES6引入了块级作用域）
+	书中讨论的数据结构都被实现为对象。创建方式：定义包括属性和方法声明的构造函数。

@@ -1,0 +1,23 @@
+第7章 字典
+	字典是一种以键值对的形式存储数据的数据结构。JavaScript的Object类就是以字典的形式设计的。
+	这里使用Array类作为基础构建Dictionary类。这样我们可以对字典中的键排序，而JavaScript中是不能对对象的属性进行排序的。不过从根本上来说，JavaScript中数组也是对象。
+	../Dictionary/Dictionary.js
+		属性：dataStore
+		方法：add,find,remove,showAll,count,clear,showAllSort
+			remove()用到了delete。用来删除键值对很好。delete是JavaScript的一个内置函数。该函数是Object类的一部分，使用对键的引用作为参数，同时删除键和其关联的值。
+			showAll()方法中使用Object.keys()方法可以返回传入参数中的存储的所有键。书中案例还用到了Array.prototype.slice.call(Object.keys(this.dataStore));，这里并不需要。
+			count(),当键的类型为字符串时，length属性就不管用了。这里this.dataStore.length始终会为0。其实仔细想想，这里也不需要循环，Object.keys(this.dataStore).length就够了。
+			clear(),这里遇到了问题。下面的代码，delete没有生效。原因是Object.keys(this.dataStore)是个数组，key在这里是数字，并不是我们要的key。
+				for(var key in Object.keys(this.dataStore)) {
+					delete this.dataStore[key];
+				}
+			如果直接循环for(var key in this.dataStore)或者Object.keys(this.dataStore).forEach(function(key) {……，也可以。
+			showAllSort(),将键进行排序，Object.keys(this.dataStore).sort()。
+	../Dictionary/testDictionary.js(依赖../Dictionary/Dictionary.js)
+		测试字典类。
+	【练习】
+	../Dictionary/Exercise/telephone.js(依赖../Dictionary/Dictionary.js)
+		练习1，电话薄。
+	../Dictionary/Exercise/wordcount.js(依赖../Dictionary/Dictionary.js)
+		练习2，记录一段文本中的各个单词出现的次数。
+		练习3，按字母顺序显示。
